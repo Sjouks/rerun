@@ -56,7 +56,7 @@ The ui components are quite specific for the type of blueprint. Here are a few e
 * Blueprint view:
     * `visible`
     * `width`
-* Selection panel:
+* Selection view:
     * `visible`
     * `width`
 * Time panel:
