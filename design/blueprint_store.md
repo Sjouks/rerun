@@ -53,7 +53,7 @@ The ui components are quite specific for the type of blueprint. Here are a few e
     * `TimeControl` (globally selected timeline, time, play state, etc)
 * Top bar:
     * `visible`
-* Blueprint panel:
+* Blueprint view:
     * `visible`
     * `width`
 * Selection panel:
