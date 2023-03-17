@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["gpu_data",""],["mesh_vertices","Defines how mesh vertices are built."]],"struct":[["GpuMaterial",""],["GpuMesh",""],["Material",""],["Mesh",""]]};

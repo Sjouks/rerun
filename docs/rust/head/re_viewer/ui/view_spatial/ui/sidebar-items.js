@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["AutoSizeUnit",""],["SpatialNavigationMode","Describes how the scene is navigated, determining if it is a 2D or 3D experience."]],"fn":[["axis_name",""],["create_labels",""],["outline_config",""],["size_ui",""]],"struct":[["ViewSpatialState",""]]};

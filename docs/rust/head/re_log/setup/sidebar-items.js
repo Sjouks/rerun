@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["set_default_rust_log_env","Set `RUST_LOG` environment variable to `info`, unless set, and also set some other log levels on crates that are too loud."],["setup_native_logging",""]]};

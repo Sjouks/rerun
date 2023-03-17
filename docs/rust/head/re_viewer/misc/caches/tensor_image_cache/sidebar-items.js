@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["apply_color_map",""]],"struct":[["CachedImage",""],["ColoredTensorView","The [`ColoredTensorView`] is a wrapper on top of [`Tensor`]"],["ImageCache",""],["ImageCacheKey",""]]};

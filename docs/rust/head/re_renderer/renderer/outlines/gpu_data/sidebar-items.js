@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["JumpfloodingStepUniformBuffer","Keep in sync with `jumpflooding_step.wgsl`"],["OutlineConfigUniformBuffer","Keep in sync with `outlines_from_voronoi.wgsl`"]]};

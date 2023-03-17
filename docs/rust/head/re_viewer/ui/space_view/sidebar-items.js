@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["SpaceView","A view of a space."],["SpaceViewId","A unique id for each space view."],["ViewState","Camera position and similar."]]};
