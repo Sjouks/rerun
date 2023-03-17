@@ -1794,6 +1794,10 @@
 <a href="#1794" id="1794">1794</a>
 <a href="#1795" id="1795">1795</a>
 <a href="#1796" id="1796">1796</a>
+<a href="#1797" id="1797">1797</a>
+<a href="#1798" id="1798">1798</a>
+<a href="#1799" id="1799">1799</a>
+<a href="#1800" id="1800">1800</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{any::Any, hash::Hash};
 
 <span class="kw">use </span>ahash::HashMap;
@@ -2401,6 +2405,9 @@
         <span class="kw">match </span>rx.source() {
             re_smart_channel::Source::File { path } =&gt; {
                 ui.strong(<span class="macro">format!</span>(<span class="string">&quot;Loading {}…&quot;</span>, path.display()));
+            }
+            re_smart_channel::Source::RrdHttpStream { url } =&gt; {
+                ui.strong(<span class="macro">format!</span>(<span class="string">&quot;Loading {url}…&quot;</span>));
             }
             re_smart_channel::Source::Sdk =&gt; {
                 ready_and_waiting(ui, <span class="string">&quot;Waiting for logging data from SDK&quot;</span>);
@@ -3577,7 +3584,8 @@
         </span>re_smart_channel::Source::File { .. } =&gt; PlayState::Playing,
 
         <span class="comment">// Live data - follow it!
-        </span>re_smart_channel::Source::Sdk
+        </span>re_smart_channel::Source::RrdHttpStream { .. }
+        | re_smart_channel::Source::Sdk
         | re_smart_channel::Source::WsClient { .. }
         | re_smart_channel::Source::TcpServer { .. } =&gt; PlayState::Following,
     };

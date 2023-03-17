@@ -199,6 +199,9 @@
 <a href="#199" id="199">199</a>
 <a href="#200" id="200">200</a>
 <a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
 </pre><pre class="rust"><code><span class="doccomment">//! A channel that keeps track of latency and queue length.
 
 </span><span class="kw">use </span>std::sync::{
@@ -214,6 +217,9 @@
 </span><span class="kw">pub enum </span>Source {
     <span class="doccomment">/// The source if a file on disk
     </span>File { path: std::path::PathBuf },
+
+    <span class="doccomment">/// Streaming an `.rrd` file over http.
+    </span>RrdHttpStream { url: String },
 
     <span class="doccomment">/// The source is the logging sdk directly, same process.
     </span>Sdk,
@@ -234,7 +240,7 @@
     <span class="kw">pub fn </span>is_network(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::File { .. } | <span class="self">Self</span>::Sdk =&gt; <span class="bool-val">false</span>,
-            <span class="self">Self</span>::WsClient { .. } | <span class="self">Self</span>::TcpServer { .. } =&gt; <span class="bool-val">true</span>,
+            <span class="self">Self</span>::RrdHttpStream { .. } | <span class="self">Self</span>::WsClient { .. } | <span class="self">Self</span>::TcpServer { .. } =&gt; <span class="bool-val">true</span>,
         }
     }
 }

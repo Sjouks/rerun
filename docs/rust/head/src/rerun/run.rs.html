@@ -435,6 +435,40 @@
 <a href="#435" id="435">435</a>
 <a href="#436" id="436">436</a>
 <a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
 </pre><pre class="rust"><code><span class="kw">use </span>re_log_types::{LogMsg, PythonVersion};
 <span class="kw">use </span>re_smart_channel::Receiver;
 
@@ -472,7 +506,8 @@
     </span><span class="attr">#[clap(long)]
     </span>version: bool,
 
-    <span class="doccomment">/// Either a path to a `.rrd` file to load, or a websocket url to a Rerun Server from which to read data
+    <span class="doccomment">/// Either a path to a `.rrd` file to load, an http url to an `.rrd` file,
+    /// or a websocket url to a Rerun Server from which to read data
     ///
     /// If none is given, a server will be hosted which the Rerun SDK can connect to.
     </span>url_or_path: <span class="prelude-ty">Option</span>&lt;String&gt;,
@@ -685,33 +720,35 @@
     };
 
     <span class="comment">// Where do we get the data from?
-    </span><span class="kw">let </span>rx = <span class="kw">if let </span><span class="prelude-val">Some</span>(url_or_path) = <span class="kw-2">&amp;</span>args.url_or_path {
-        <span class="kw">let </span>path = std::path::Path::new(url_or_path).to_path_buf();
-        <span class="kw">if </span>path.exists() || url_or_path.ends_with(<span class="string">&quot;.rrd&quot;</span>) {
-            <span class="macro">re_log::info!</span>(<span class="string">&quot;Loading {path:?}…&quot;</span>);
-            load_file_to_channel(<span class="kw-2">&amp;</span>path).with_context(|| <span class="macro">format!</span>(<span class="string">&quot;{path:?}&quot;</span>))<span class="question-mark">?
-        </span>} <span class="kw">else </span>{
-            <span class="comment">// We are connecting to a server at a websocket address:
-            </span><span class="kw">let </span><span class="kw-2">mut </span>rerun_server_ws_url = url_or_path.clone();
-            <span class="kw">if </span>!rerun_server_ws_url.contains(<span class="string">&quot;://&quot;</span>) {
-                rerun_server_ws_url = <span class="macro">format!</span>(<span class="string">&quot;{}://{rerun_server_ws_url}&quot;</span>, re_ws_comms::PROTOCOL);
+    </span><span class="kw">let </span>rx = <span class="kw">if let </span><span class="prelude-val">Some</span>(url_or_path) = args.url_or_path.clone() {
+        <span class="kw">match </span>categorize_argument(url_or_path) {
+            ArgumentCategory::RrdHttpUrl(url) =&gt; {
+                re_viewer::stream_rrd_from_http::stream_rrd_from_http_to_channel(url)
             }
-            <span class="kw">if </span>args.web_viewer {
-                <span class="kw">return </span>host_web_viewer(rerun_server_ws_url).<span class="kw">await</span>;
-            } <span class="kw">else </span>{
-                <span class="attr">#[cfg(feature = <span class="string">&quot;native_viewer&quot;</span>)]
-                </span><span class="kw">return </span>native_viewer_connect_to_ws_url(
-                    _build_info,
-                    call_source.app_env(),
-                    startup_options,
-                    profiler,
-                    url_or_path.clone(),
-                );
+            ArgumentCategory::RrdFilePath(path) =&gt; {
+                <span class="macro">re_log::info!</span>(<span class="string">&quot;Loading {path:?}…&quot;</span>);
+                load_file_to_channel(<span class="kw-2">&amp;</span>path).with_context(|| <span class="macro">format!</span>(<span class="string">&quot;{path:?}&quot;</span>))<span class="question-mark">?
+            </span>}
+            ArgumentCategory::WebSocketAddr(rerun_server_ws_url) =&gt; {
+                <span class="comment">// We are connecting to a server at a websocket address:
 
-                <span class="attr">#[cfg(not(feature = <span class="string">&quot;native_viewer&quot;</span>))]
-                </span>{
-                    <span class="kw">_ </span>= call_source;
-                    <span class="macro">anyhow::bail!</span>(<span class="string">&quot;Can&#39;t start viewer - rerun was compiled without the &#39;native_viewer&#39; feature&quot;</span>);
+                </span><span class="kw">if </span>args.web_viewer {
+                    <span class="kw">return </span>host_web_viewer(rerun_server_ws_url).<span class="kw">await</span>;
+                } <span class="kw">else </span>{
+                    <span class="attr">#[cfg(feature = <span class="string">&quot;native_viewer&quot;</span>)]
+                    </span><span class="kw">return </span>native_viewer_connect_to_ws_url(
+                        _build_info,
+                        call_source.app_env(),
+                        startup_options,
+                        profiler,
+                        rerun_server_ws_url,
+                    );
+
+                    <span class="attr">#[cfg(not(feature = <span class="string">&quot;native_viewer&quot;</span>))]
+                    </span>{
+                        <span class="kw">_ </span>= call_source;
+                        <span class="macro">anyhow::bail!</span>(<span class="string">&quot;Can&#39;t start viewer - rerun was compiled without the &#39;native_viewer&#39; feature&quot;</span>);
+                    }
                 }
             }
         }
@@ -786,6 +823,37 @@
                 <span class="string">&quot;Can&#39;t start viewer - rerun was compiled without the &#39;native_viewer&#39; feature&quot;
             </span>);
         }
+    }
+}
+
+<span class="kw">enum </span>ArgumentCategory {
+    <span class="doccomment">/// A remote RRD file, served over http.
+    </span>RrdHttpUrl(String),
+
+    <span class="doccomment">/// A path to a local file.
+    </span>RrdFilePath(std::path::PathBuf),
+
+    <span class="doccomment">/// A remote Rerun server.
+    </span>WebSocketAddr(String),
+}
+
+<span class="kw">fn </span>categorize_argument(<span class="kw-2">mut </span>uri: String) -&gt; ArgumentCategory {
+    <span class="kw">let </span>path = std::path::Path::new(<span class="kw-2">&amp;</span>uri).to_path_buf();
+
+    <span class="kw">if </span>uri.starts_with(<span class="string">&quot;http&quot;</span>) {
+        ArgumentCategory::RrdHttpUrl(uri)
+    } <span class="kw">else if </span>uri.starts_with(<span class="string">&quot;ws&quot;</span>) {
+        ArgumentCategory::WebSocketAddr(uri)
+    } <span class="kw">else if </span>uri.starts_with(<span class="string">&quot;file://&quot;</span>) || path.exists() || uri.ends_with(<span class="string">&quot;.rrd&quot;</span>) {
+        ArgumentCategory::RrdFilePath(path)
+    } <span class="kw">else </span>{
+        <span class="comment">// If this is sometyhing like `foo.com` we can&#39;t know what it is until we connect to it.
+        // We could/should connect and see what it is, but for now we just take a wild guess instead:
+        </span><span class="macro">re_log::debug!</span>(<span class="string">&quot;Assuming WebSocket endpoint&quot;</span>);
+        <span class="kw">if </span>!uri.contains(<span class="string">&quot;://&quot;</span>) {
+            uri = <span class="macro">format!</span>(<span class="string">&quot;{}://{uri}&quot;</span>, re_ws_comms::PROTOCOL);
+        }
+        ArgumentCategory::WebSocketAddr(uri)
     }
 }
 

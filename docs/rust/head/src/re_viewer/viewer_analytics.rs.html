@@ -209,6 +209,7 @@
 <a href="#209" id="209">209</a>
 <a href="#210" id="210">210</a>
 <a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
 </pre><pre class="rust"><code><span class="doccomment">//! All telemetry analytics collected by the Rerun Viewer are defined in this file for easy auditing.
 //!
 //! There are two exceptions:
@@ -394,7 +395,8 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(data_source) = <span class="kw-2">&amp;</span>log_db.data_source {
             <span class="kw">let </span>data_source = <span class="kw">match </span>data_source {
                 re_smart_channel::Source::File { .. } =&gt; <span class="string">&quot;file&quot;</span>, <span class="comment">// .rrd
-                </span>re_smart_channel::Source::Sdk =&gt; <span class="string">&quot;sdk&quot;</span>,          <span class="comment">// show()
+                </span>re_smart_channel::Source::RrdHttpStream { .. } =&gt; <span class="string">&quot;http&quot;</span>,
+                re_smart_channel::Source::Sdk =&gt; <span class="string">&quot;sdk&quot;</span>, <span class="comment">// show()
                 </span>re_smart_channel::Source::WsClient { .. } =&gt; <span class="string">&quot;ws_client&quot;</span>, <span class="comment">// spawn()
                 </span>re_smart_channel::Source::TcpServer { .. } =&gt; <span class="string">&quot;tcp_server&quot;</span>, <span class="comment">// connect()
             </span>};

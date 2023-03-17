@@ -121,6 +121,16 @@
 <a href="#121" id="121">121</a>
 <a href="#122" id="122">122</a>
 <a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::App;
 
 <span class="doccomment">/// Connects to a server over WebSockets.
@@ -167,36 +177,41 @@
 
         <span class="macro">re_log::info!</span>(<span class="string">&quot;Connecting to WS server at {:?}…&quot;</span>, <span class="self">self</span>.url);
 
-        <span class="kw">let </span>connection =
-            re_ws_comms::Connection::viewer_to_server(<span class="self">self</span>.url.clone(), <span class="kw">move </span>|binary: Vec&lt;u8&gt;| {
-                <span class="kw">match </span>re_ws_comms::decode_log_msg(<span class="kw-2">&amp;</span>binary) {
-                    <span class="prelude-val">Ok</span>(log_msg) =&gt; {
-                        <span class="kw">if </span>tx.send(log_msg).is_ok() {
-                            egui_ctx.request_repaint(); <span class="comment">// Wake up UI thread
-                            </span>std::ops::ControlFlow::Continue(())
-                        } <span class="kw">else </span>{
-                            <span class="macro">re_log::info!</span>(<span class="string">&quot;Failed to send log message to viewer - closing&quot;</span>);
-                            std::ops::ControlFlow::Break(())
-                        }
-                    }
-                    <span class="prelude-val">Err</span>(err) =&gt; {
-                        <span class="macro">re_log::error!</span>(<span class="string">&quot;Failed to parse message: {}&quot;</span>, re_error::format(<span class="kw-2">&amp;</span>err));
+        <span class="kw">let </span>callback = <span class="kw">move </span>|binary: Vec&lt;u8&gt;| {
+            <span class="kw">match </span>re_ws_comms::decode_log_msg(<span class="kw-2">&amp;</span>binary) {
+                <span class="prelude-val">Ok</span>(log_msg) =&gt; {
+                    <span class="kw">if </span>tx.send(log_msg).is_ok() {
+                        egui_ctx.request_repaint(); <span class="comment">// Wake up UI thread
+                        </span>std::ops::ControlFlow::Continue(())
+                    } <span class="kw">else </span>{
+                        <span class="macro">re_log::info!</span>(<span class="string">&quot;Failed to send log message to viewer - closing&quot;</span>);
                         std::ops::ControlFlow::Break(())
                     }
                 }
-            })
-            .unwrap(); <span class="comment">// TODO(emilk): handle error
+                <span class="prelude-val">Err</span>(err) =&gt; {
+                    <span class="macro">re_log::error!</span>(<span class="string">&quot;Failed to parse message: {}&quot;</span>, re_error::format(<span class="kw-2">&amp;</span>err));
+                    std::ops::ControlFlow::Break(())
+                }
+            }
+        };
 
-        </span><span class="kw">let </span>app = <span class="kw">crate</span>::App::from_receiver(
-            <span class="self">self</span>.build_info,
-            <span class="kw-2">&amp;</span><span class="self">self</span>.app_env,
-            <span class="self">self</span>.startup_options,
-            <span class="self">self</span>.re_ui.clone(),
-            storage,
-            rx,
-        );
+        <span class="kw">match </span>re_ws_comms::Connection::viewer_to_server(<span class="self">self</span>.url.clone(), callback) {
+            <span class="prelude-val">Ok</span>(connection) =&gt; {
+                <span class="kw">let </span>app = <span class="kw">crate</span>::App::from_receiver(
+                    <span class="self">self</span>.build_info,
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.app_env,
+                    <span class="self">self</span>.startup_options,
+                    <span class="self">self</span>.re_ui.clone(),
+                    storage,
+                    rx,
+                );
 
-        <span class="self">self</span>.app = <span class="prelude-val">Some</span>((connection, app));
+                <span class="self">self</span>.app = <span class="prelude-val">Some</span>((connection, app));
+            }
+            <span class="prelude-val">Err</span>(err) =&gt; {
+                <span class="macro">re_log::error!</span>(<span class="string">&quot;Failed to connect to {:?}: {}&quot;</span>, <span class="self">self</span>.url, err);
+            }
+        }
     }
 
     <span class="attr">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
@@ -241,6 +256,11 @@
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>((<span class="kw">_</span>, app)) = <span class="kw-2">&amp;mut </span><span class="self">self</span>.app {
             app.update(egui_ctx, frame);
+        } <span class="kw">else </span>{
+            egui::CentralPanel::default().show(egui_ctx, |ui| {
+                <span class="comment">// TODO(emilk): show the error message.
+                </span>ui.label(<span class="string">&quot;An error occurred.\nCheck the debug console for details.&quot;</span>);
+            });
         }
     }
 }
