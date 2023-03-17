@@ -1,188 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1679064303513,
+  "lastUpdate": 1679066459702,
   "repoUrl": "https://github.com/rerun-io/rerun",
   "entries": {
     "Rust Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "emil.ernerfeldt@gmail.com",
-            "name": "Emil Ernerfeldt",
-            "username": "emilk"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "58cae4ef8d703e32f05fe43875ea38faa0fca3a1",
-          "message": "Update `rayon` (#1541)\n\n* cargo update -p rayon\r\n\r\n    Updating crates.io index\r\n    Updating rayon v1.6.0 -> v1.7.0\r\n    Updating rayon-core v1.10.1 -> v1.11.0\r\n\r\n* Don't use jpeg_rayon",
-          "timestamp": "2023-03-09T12:27:23+01:00",
-          "tree_id": "706a5c95a2f120d4a46b67e952351a7c4e68e635",
-          "url": "https://github.com/rerun-io/rerun/commit/58cae4ef8d703e32f05fe43875ea38faa0fca3a1"
-        },
-        "date": 1678362032969,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "datastore/insert/batch/rects/insert",
-            "value": 557144,
-            "range": "± 1786",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "datastore/latest_at/batch/rects/query",
-            "value": 1809,
-            "range": "± 6",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "datastore/latest_at/missing_components/primary",
-            "value": 356,
-            "range": "± 0",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "datastore/latest_at/missing_components/secondaries",
-            "value": 434,
-            "range": "± 0",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "datastore/range/batch/rects/query",
-            "value": 150031,
-            "range": "± 236",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/generate_message_bundles",
-            "value": 48103063,
-            "range": "± 666263",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/generate_messages",
-            "value": 126375278,
-            "range": "± 1190100",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/encode_log_msg",
-            "value": 152631471,
-            "range": "± 916608",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/encode_total",
-            "value": 326715184,
-            "range": "± 1547360",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/decode_log_msg",
-            "value": 180790531,
-            "range": "± 772044",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/decode_message_bundles",
-            "value": 66673318,
-            "range": "± 882406",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "mono_points_arrow/decode_total",
-            "value": 243897107,
-            "range": "± 1609801",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/generate_message_bundles",
-            "value": 332839,
-            "range": "± 522",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/generate_messages",
-            "value": 6312,
-            "range": "± 21",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/encode_log_msg",
-            "value": 371544,
-            "range": "± 1074",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/encode_total",
-            "value": 727396,
-            "range": "± 3113",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/decode_log_msg",
-            "value": 350006,
-            "range": "± 963",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/decode_message_bundles",
-            "value": 2142,
-            "range": "± 7",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "batch_points_arrow/decode_total",
-            "value": 359278,
-            "range": "± 1278",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "arrow_mono_points/insert",
-            "value": 6065217669,
-            "range": "± 34082787",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "arrow_mono_points/query",
-            "value": 1695772,
-            "range": "± 7633",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "arrow_batch_points/insert",
-            "value": 2605813,
-            "range": "± 12026",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "arrow_batch_points/query",
-            "value": 16873,
-            "range": "± 22",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "arrow_batch_vecs/insert",
-            "value": 42885,
-            "range": "± 176",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "arrow_batch_vecs/query",
-            "value": 506209,
-            "range": "± 890",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "tuid/Tuid::random",
-            "value": 34,
-            "range": "± 0",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -5393,6 +5213,186 @@ window.BENCHMARK_DATA = {
             "name": "arrow_batch_vecs/query",
             "value": 506582,
             "range": "± 852",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "tuid/Tuid::random",
+            "value": 34,
+            "range": "± 0",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "emil.ernerfeldt@gmail.com",
+            "name": "Emil Ernerfeldt",
+            "username": "emilk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5e88054ea92c8ae2bc09e15253463dbc8f4622c6",
+          "message": "Load .rrd file over HTTP (#1600)\n\n* Add option to stream .rrd files over http\r\n\r\n* the `url=` parameter in the web-viewer can point to an rrd over http\r\n\r\n* You can specify the .rrd http from the index.html\r\n\r\n* Better handle WS connection errors\r\n\r\n* Better logging and logic\r\n\r\n* fix typo\r\n\r\n* Cleanup\r\n\r\n* Progressively decode the .rrd file on web\r\n\r\n* Refactor: move rrd/http streaming to own file\r\n\r\n* Nicer protocol classification",
+          "timestamp": "2023-03-17T16:10:39+01:00",
+          "tree_id": "ef8ec683ecd8e7ea26c1ba294f72ed3788dc5203",
+          "url": "https://github.com/rerun-io/rerun/commit/5e88054ea92c8ae2bc09e15253463dbc8f4622c6"
+        },
+        "date": 1679066457693,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "datastore/insert/batch/rects/insert",
+            "value": 567836,
+            "range": "± 2239",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "datastore/latest_at/batch/rects/query",
+            "value": 1888,
+            "range": "± 1",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "datastore/latest_at/missing_components/primary",
+            "value": 285,
+            "range": "± 0",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "datastore/latest_at/missing_components/secondaries",
+            "value": 440,
+            "range": "± 0",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "datastore/range/batch/rects/query",
+            "value": 151144,
+            "range": "± 160",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/generate_message_bundles",
+            "value": 49335728,
+            "range": "± 1428753",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/generate_messages",
+            "value": 136735336,
+            "range": "± 1332016",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/encode_log_msg",
+            "value": 166469447,
+            "range": "± 967847",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/encode_total",
+            "value": 356658292,
+            "range": "± 1686409",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/decode_log_msg",
+            "value": 186013297,
+            "range": "± 1902305",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/decode_message_bundles",
+            "value": 71881796,
+            "range": "± 961244",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "mono_points_arrow/decode_total",
+            "value": 255405433,
+            "range": "± 1840287",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/generate_message_bundles",
+            "value": 324802,
+            "range": "± 805",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/generate_messages",
+            "value": 6450,
+            "range": "± 13",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/encode_log_msg",
+            "value": 354281,
+            "range": "± 1077",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/encode_total",
+            "value": 697885,
+            "range": "± 2361",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/decode_log_msg",
+            "value": 347240,
+            "range": "± 742",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/decode_message_bundles",
+            "value": 2157,
+            "range": "± 14",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "batch_points_arrow/decode_total",
+            "value": 350973,
+            "range": "± 855",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "arrow_mono_points/insert",
+            "value": 6788313820,
+            "range": "± 13970042",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "arrow_mono_points/query",
+            "value": 1775115,
+            "range": "± 15207",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "arrow_batch_points/insert",
+            "value": 2718636,
+            "range": "± 9815",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "arrow_batch_points/query",
+            "value": 17012,
+            "range": "± 31",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "arrow_batch_vecs/insert",
+            "value": 42654,
+            "range": "± 130",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "arrow_batch_vecs/query",
+            "value": 506183,
+            "range": "± 1278",
             "unit": "ns/iter"
           },
           {
