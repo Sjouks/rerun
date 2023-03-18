@@ -281,7 +281,13 @@ impl MsgSender {
         // Always the primary component last so range-based queries will include the other data. See(#1215)
         // Since the primary component can't be splatted it must be in msg_standard
         if let Some(msg_standard) = msg_standard {
-            sink.send(LogMsg::ArrowMsg(msg_standard.try_into()?));
+            let a = LogMsg::ArrowMsg(msg_standard.try_into()?);
+            match &a {
+                LogMsg::ArrowMsg(msg) => dbg!(&msg.schema),
+                _ => unreachable!(),
+            };
+            sink.send(a);
+            // sink.send(LogMsg::ArrowMsg(msg_standard.try_into()?));
         }
 
         Ok(())

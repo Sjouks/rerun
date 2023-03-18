@@ -209,6 +209,7 @@ impl CongestionManager {
         }
     }
 
+    // TODO: turns out this is gonna get messy
     fn should_send_time_point(&mut self, time_point: &TimePoint) -> bool {
         for (timeline, time) in time_point.iter() {
             if timeline.typ() == TimeType::Sequence {

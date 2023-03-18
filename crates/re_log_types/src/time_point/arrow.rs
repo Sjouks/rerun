@@ -11,6 +11,8 @@ use crate::{TimeInt, TimePoint, Timeline};
 
 arrow2_convert::arrow_enable_vec_for_type!(TimePoint);
 
+// TODO: not entirely sure why everything's done manually here? -> timepoint's a btreemap
+
 impl ArrowField for TimePoint {
     type Type = Self;
 

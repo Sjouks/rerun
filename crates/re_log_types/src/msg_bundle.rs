@@ -71,8 +71,10 @@ use crate::{
 };
 
 //TODO(john) get rid of this eventually
+// TODO: this will disappear on its own
 const ENTITY_PATH_KEY: &str = "RERUN:entity_path";
 
+// TODO: these will disappear too
 const COL_COMPONENTS: &str = "components";
 const COL_TIMELINES: &str = "timelines";
 
@@ -131,8 +133,8 @@ where
 
 /// A [`ComponentBundle`] holds an Arrow component column, and its field name.
 ///
-/// A [`ComponentBundle`] can be created from a collection of any element that implements the
-/// [`Component`] and [`ArrowSerialize`] traits.
+/// A [`ComponentBundle`] can be created from a collection of any element that implements
+/// [`SerializableComponent`].
 ///
 /// # Example
 ///
@@ -141,6 +143,8 @@ where
 /// let points = vec![Point2D { x: 0.0, y: 1.0 }];
 /// let bundle = ComponentBundle::try_from(points).unwrap();
 /// ```
+//
+// TODO: `ComponentCollection` instead?
 #[derive(Debug, Clone)]
 pub struct ComponentBundle {
     /// The name of the Component, used as column name in the table `Field`.
@@ -199,6 +203,9 @@ impl ComponentBundle {
     pub fn value_list(&self) -> &ListArray<i32> {
         &self.value
     }
+
+    // TODO: let's say a ComponentBundle, aka ComponentCollection, is always _a single cell_, in
+    // which case the notion of row used below doesn't make sense in this context.
 
     /// Returns the number of _rows_ in this bundle, i.e. the length of the bundle.
     ///
@@ -331,6 +338,8 @@ impl MsgBundle {
             components,
         };
 
+        // TODO: the custom splat mess is going away
+        //
         // TODO(cmc): Since we don't yet support mixing splatted data within instanced rows,
         // we need to craft an array of `MsgId`s that matches the length of the other components.
         if let Some(num_instances) = this.num_instances(0) {
@@ -502,6 +511,8 @@ impl TryFrom<MsgBundle> for ArrowMsg {
 
         // Build & pack components
         let (components_schema, components_data) = pack_components(bundle.components.into_iter());
+
+        // dbg!(components_data.data_type());
 
         schema.fields.extend(components_schema.fields);
         schema.metadata.extend(components_schema.metadata);

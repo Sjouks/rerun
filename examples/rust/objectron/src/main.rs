@@ -144,6 +144,7 @@ fn log_baseline_objects(session: &Session, objects: &[objectron::Object]) -> any
             .with_component(&[bbox])?
             .with_component(&[transform])?
             .with_component(&[label])?
+            // TODO: this disappears
             .with_splat(ColorRGBA::from_rgb(160, 230, 130))?
             .send(session)?;
     }

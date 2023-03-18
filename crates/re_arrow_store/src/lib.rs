@@ -1,6 +1,7 @@
 //! The Rerun datastore, implemented on top of [Apache Arrow](https://arrow.apache.org/)
 //! using the [`arrow2`] crate.
 //!
+//! TODO: it's really not a time-series database, it's a latest-at database.
 //! This crate is an in-memory time series database for Rerun log data.
 //! It is indexed by Entity path, component, timeline, and time.
 //! It supports out-of-order insertions, and fast `O(log(N))` queries.
@@ -15,6 +16,7 @@
 //!
 
 mod arrow_util;
+// mod data_batch;
 mod store;
 mod store_gc;
 mod store_read;
